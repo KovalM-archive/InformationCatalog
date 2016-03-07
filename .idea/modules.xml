@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CatalogClient/CatalogClient.iml" filepath="$PROJECT_DIR$/CatalogClient/CatalogClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CatalogServer/CatalogServer.iml" filepath="$PROJECT_DIR$/CatalogServer/CatalogServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/InformationCatalog.iml" filepath="$PROJECT_DIR$/InformationCatalog.iml" />
+    </modules>
+  </component>
+</project>
