@@ -5,10 +5,10 @@
          version="3.1">
     <servlet>
         <servlet-name>FirstServlet</servlet-name>
-        <servlet-class></servlet-class>
+        <servlet-class>kmv.servlet.FirstServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>FirstServlet</servlet-name>
-        <url-pattern>/FirstServlet</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 </web-app>
