@@ -1,7 +1,11 @@
 package kmv.view;
 
 import kmv.controler.ServerController;
+import kmv.menu.edit.AdditionListener;
+import kmv.menu.edit.SearchDeleteListener;
+import kmv.menu.file.ExitMenuListener;
 import kmv.menu.file.NewTableListener;
+import kmv.menu.file.SaveMenuListener;
 import kmv.server.RPCManager;
 import kmv.server.SOAPManager;
 import kmv.server.ServerConstants;
@@ -22,30 +26,6 @@ public class MainWindow implements ViewConstants, ServerConstants{
         chooserServerType();
         createMenuBar();
         createToolBar();
-
-//        NewTableListener newTable = new NewTableListener(tableTab, jtbMain, inputStream,outputStream);
-//        jbNew.addActionListener(newTable);
-//        jmiCreate.addActionListener(newTable);
-//
-//        SaveMenuListener saveTable = new SaveMenuListener(mainFrame, outputStream);
-//        jbSave.addActionListener(saveTable);
-//        jmiSave.addActionListener(saveTable);
-//
-//        OpenMenuListener openTable = new OpenMenuListener(tableTab, jtbMain, outputStream, inputStream, mainFrame);
-//        jbOpen.addActionListener(openTable);
-//        jmiOpen.addActionListener(openTable);
-//
-//        jmiExit.addActionListener(new ExitMenuListener());
-//
-//        AdditionListener additionStudent = new AdditionListener(mainFrame, tableTab);
-//        jbtAddition.addActionListener(additionStudent);
-//        jmiAddition.addActionListener(additionStudent);
-//
-//        SearchDeleteListener searchDeleteListener = new SearchDeleteListener(mainFrame, tableTab, inputStream,outputStream);
-//        jbtSearch.addActionListener(searchDeleteListener);
-//        jmiSearch.addActionListener(searchDeleteListener);
-//        jbtDelete.addActionListener(searchDeleteListener);
-//        jmiDelete.addActionListener(searchDeleteListener);
     }
     
     private void configureMainFrame(){
@@ -70,14 +50,11 @@ public class MainWindow implements ViewConstants, ServerConstants{
 
         JMenuItem createItem = new JMenuItem(NEW, KeyEvent.VK_N);
         createItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
-        JMenuItem openItem = new JMenuItem(OPEN, KeyEvent.VK_O);
-        openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
         JMenuItem saveItem = new JMenuItem(SAVE, KeyEvent.VK_S);
         JMenuItem exitItem = new JMenuItem(EXIT, KeyEvent.VK_Q);
         exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
 
         fileMenu.add(createItem);
-        fileMenu.add(openItem);
         fileMenu.add(saveItem);
         fileMenu.add(exitItem);
         mainMenuBar.add(fileMenu);
@@ -87,10 +64,12 @@ public class MainWindow implements ViewConstants, ServerConstants{
 
         JMenuItem searchItem = new JMenuItem(FIND, KeyEvent.VK_R);
         searchItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK));
+        searchItem.setActionCommand(FIND);
         JMenuItem additionItem = new JMenuItem(ADD, KeyEvent.VK_A);
         additionItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
         JMenuItem deleteItem = new JMenuItem(FIND_REMOVE, KeyEvent.VK_D);
         deleteItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK));
+        deleteItem.setActionCommand(FIND_REMOVE);
 
         editMenu.add(searchItem);
         editMenu.add(additionItem);
@@ -99,14 +78,22 @@ public class MainWindow implements ViewConstants, ServerConstants{
         mainFrame.setJMenuBar(mainMenuBar);
 
         createItem.addActionListener(new NewTableListener(serverController));
+        saveItem.addActionListener(new SaveMenuListener(serverController));
+        exitItem.addActionListener(new ExitMenuListener());
+
+        additionItem.addActionListener(new AdditionListener(serverController, mainFrame));
+        searchItem.addActionListener(new SearchDeleteListener(serverController, mainFrame));
+        deleteItem.addActionListener(new SearchDeleteListener(serverController, mainFrame));
     }
 
     private void createToolBar(){
         JToolBar studentToolBar = new JToolBar(null, JToolBar.VERTICAL);
 
         JButton searchButton = new JButton(new ImageIcon(SEARCH_TOOLBAR_EDIT));
+        searchButton.setActionCommand(FIND);
         JButton additionButton = new JButton(new ImageIcon(ADDITION_TOOLBAR_EDIT));
         JButton deleteButton = new JButton(new ImageIcon(DELETE_TOOLBAR_EDIT));
+        deleteButton.setActionCommand(FIND_REMOVE);
 
         studentToolBar.add(searchButton);
         studentToolBar.add(additionButton);
@@ -118,17 +105,20 @@ public class MainWindow implements ViewConstants, ServerConstants{
 
         JToolBar fileToolBar = new JToolBar(null, JToolBar.HORIZONTAL);
         JButton newButton = new JButton(new ImageIcon(NEW_TOOLBAR_FILE));
-        JButton openButton = new JButton(new ImageIcon(OPEN_TOOLBAR_FILE));
         JButton saveButton = new JButton(new ImageIcon(SAVE_TOOLBAR_FILE));
 
         fileToolBar.add(newButton);
-        fileToolBar.add(openButton);
         fileToolBar.add(saveButton);
         fileToolBar.setFloatable(false);
         fileToolBar.setVisible(true);
         mainFrame.add(fileToolBar, BorderLayout.NORTH);
 
         newButton.addActionListener(new NewTableListener(serverController));
+        saveButton.addActionListener(new SaveMenuListener(serverController));
+
+        additionButton.addActionListener(new AdditionListener(serverController, mainFrame));
+        searchButton.addActionListener(new SearchDeleteListener(serverController, mainFrame));
+        deleteButton.addActionListener(new SearchDeleteListener(serverController, mainFrame));
     }
 
     private void configureServerController(){
@@ -142,9 +132,9 @@ public class MainWindow implements ViewConstants, ServerConstants{
         String choose = (String)JOptionPane.showInputDialog(null, "Choose server type", "Server Chooser",
                 JOptionPane.PLAIN_MESSAGE, null, possibilities, SOAP_TYPE);
         if (RPC_TYPE.equals(choose)){
-            serverController.setServiceManager(new RPCManager(enterHost()));
+            serverController.setServerManager(new RPCManager(enterHost()));
         } else if (SOAP_TYPE.equals(choose)){
-            serverController.setServiceManager(new SOAPManager(enterHost()));
+            serverController.setServerManager(new SOAPManager());
         } else {
             System.exit(0);
         }

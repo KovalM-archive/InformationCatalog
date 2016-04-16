@@ -1,57 +1,62 @@
 package kmv.server;
 
-import kmv.student.SearchStudentTerms;
-import kmv.student.StudentModel;
+import kmv.soap.SOAPWebServer;
+import kmv.soap.StudentWebServerService;
+import kmv.soap.SearchStudentTerms;
+import kmv.soap.StudentModel;
 
 import java.util.List;
 
-public class SOAPManager implements ServiceManager {
-    private String hostName;
+public class SOAPManager implements ServerManager {
+    private SOAPWebServer soapWebServer;
 
-    public SOAPManager(String hostName){
-        setHostName(hostName);
+    public SOAPManager(){
+        StudentWebServerService webServerService = new StudentWebServerService();
+        soapWebServer = webServerService.getStudentWebServerPort();
+    }
+
+    @Override
+    public List<StudentModel> getAllStudents() {
+        return soapWebServer.getAllStudents();
     }
 
     @Override
     public void addStudent(StudentModel studentModel) {
-
+        soapWebServer.addStudent(studentModel);
     }
 
     @Override
     public void removeStudent(StudentModel studentModel) {
-
+        soapWebServer.removeStudent(studentModel);
     }
 
     @Override
     public boolean updateStudent(SearchStudentTerms studentTerms) {
-        return false;
+        return soapWebServer.updateStudent(studentTerms);
     }
 
     @Override
     public List<StudentModel> findStudents(SearchStudentTerms studentTerms) {
-        return null;
+        return soapWebServer.findStudents(studentTerms);
     }
 
     @Override
     public void findRemoveStudents(SearchStudentTerms studentTerms) {
-
+        soapWebServer.findRemoveStudents(studentTerms);
     }
 
     @Override
     public int getStudentCount() {
-        return 0;
+        return soapWebServer.getStudentCount();
     }
 
     @Override
     public StudentModel getStudentAtIndex(int index) {
-        return null;
+        return soapWebServer.getStudentAtIndex(index);
     }
 
-    public String getHostName() {
-        return hostName;
-    }
-
-    public void setHostName(String hostName) {
-        this.hostName = hostName;
+    @Override
+    public void saveChanges() {
+        soapWebServer.saveChanges();
     }
 }

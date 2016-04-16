@@ -1,10 +1,9 @@
 package kmv.view;
 
 import kmv.controler.ServerController;
-import kmv.student.StudentModel;
+import kmv.soap.StudentModel;
 
 import javax.swing.JTable;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,9 +44,9 @@ public class StudentTableView extends JTable {
             List<StudentModel> studentListBuffer = new ArrayList<StudentModel>();
             int l = tableModel.getNumberRecordsOnPage()*(newPageIndex-1);
             int r = l + tableModel.getNumberRecordsOnPage();
-            int countRecods = getCountRecord();
+            int countRecords = getCountRecord();
             for (int i = l+1; i <=r; i++) {
-                if (i > countRecods){
+                if (i > countRecords){
                     break;
                 }
                 studentListBuffer.add(getStudentAtIndex(i-1));
@@ -61,7 +60,7 @@ public class StudentTableView extends JTable {
     }
 
     public int getCountRecord(){
-        return serverController.getServiceManager().getStudentCount();
+        return serverController.getServerManager().getStudentCount();
     }
 
     public void calculateNumberPage(){
@@ -75,17 +74,17 @@ public class StudentTableView extends JTable {
     }
 
     public void addStudent(StudentModel currentStudent){
-        serverController.getServiceManager().addStudent(currentStudent);
+        serverController.getServerManager().addStudent(currentStudent);
         calculateNumberPage();
         goToPage(tableModel.getIndexPage());
     }
 
     public StudentModel getStudentAtIndex(int index){
-        return serverController.getServiceManager().getStudentAtIndex(index);
+        return serverController.getServerManager().getStudentAtIndex(index);
     }
 
     public void removeStudent(StudentModel oldStudent){
-        serverController.getServiceManager().removeStudent(oldStudent);
+        serverController.getServerManager().removeStudent(oldStudent);
         calculateNumberPage();
         goToPage(1);
     }

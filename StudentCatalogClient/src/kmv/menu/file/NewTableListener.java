@@ -1,10 +1,7 @@
 package kmv.menu.file;
 
-//import tablemodel.TableModel;
-//import tableview.TableView;
-
 import kmv.controler.ServerController;
-import kmv.student.StudentModel;
+import kmv.soap.StudentModel;
 import kmv.view.StudentTableModel;
 import kmv.view.TablePanel;
 import kmv.view.ChangeTablePanel;

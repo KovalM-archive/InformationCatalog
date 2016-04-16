@@ -1,5 +1,6 @@
 package kmv.menu.edit;
 
+import kmv.controler.ServerController;
 import kmv.view.TablePanel;
 
 import java.awt.event.WindowEvent;
@@ -8,12 +9,12 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 public class CloseSearchDialogListener implements WindowListener {
-    private ObjectOutputStream outputStream;
     private TablePanel tablePanel;
+    private ServerController serverController;
 
-    public CloseSearchDialogListener(ObjectOutputStream outputStream, TablePanel tablePanel){
-        this.outputStream = outputStream;
+    public CloseSearchDialogListener(TablePanel tablePanel, ServerController serverController){
         this.tablePanel = tablePanel;
+        this.serverController = serverController;
     }
 
     @Override
@@ -27,16 +28,12 @@ public class CloseSearchDialogListener implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        try {
-            outputStream.writeObject("End find or remove");
-            tablePanel.getTableView().goToPage(1);
-            tablePanel.getChangeTablePanel().getAllRecord().setText(
+        serverController.getServerManager().updateStudent(null);
+        tablePanel.getTableView().goToPage(1);
+        tablePanel.getChangeTablePanel().getAllRecord().setText(
                     String.valueOf(tablePanel.getTableView().getCountRecord()));
-            tablePanel.getChangeTablePanel().getAllPage().setText(
+        tablePanel.getChangeTablePanel().getAllPage().setText(
                     String.valueOf(tablePanel.getTableView().getNumberPage()));
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
     }
 
     @Override

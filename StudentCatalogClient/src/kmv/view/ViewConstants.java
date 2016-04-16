@@ -11,9 +11,9 @@ public interface ViewConstants {
     String SAVE = "Save";
     String EXIT = "Exit";
     String EDIT = "Edit";
-    String FIND = "Find student";
-    String ADD = "Add student";
-    String FIND_REMOVE = "Find and Remove student";
+    String FIND = "Find";
+    String ADD = "Add";
+    String FIND_REMOVE = "Find and Remove";
 
     String SOAP_TYPE = "SOAP";
     String RPC_TYPE = "RPC";

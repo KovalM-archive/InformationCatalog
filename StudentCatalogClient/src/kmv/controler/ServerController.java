@@ -1,19 +1,19 @@
 package kmv.controler;
 
-import kmv.server.ServiceManager;
+import kmv.server.ServerManager;
 
 import javax.swing.*;
 
 public class ServerController {
-    private ServiceManager serviceManager;
+    private ServerManager serverManager;
     private JTabbedPane tabbedTab;
 
-    public ServiceManager getServiceManager() {
-        return serviceManager;
+    public ServerManager getServerManager() {
+        return serverManager;
     }
 
-    public void setServiceManager(ServiceManager serviceManager) {
-        this.serviceManager = serviceManager;
+    public void setServerManager(ServerManager serverManager) {
+        this.serverManager = serverManager;
     }
 
     public JTabbedPane getTabbedTab() {

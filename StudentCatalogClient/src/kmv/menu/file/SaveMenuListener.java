@@ -1,30 +1,21 @@
 package kmv.menu.file;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import kmv.controler.ServerController;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 
 public class SaveMenuListener implements ActionListener {
-    private ObjectOutputStream outputStream;
-    private JFrame mainWindow;
+    private ServerController serverController;
 
-    public SaveMenuListener(JFrame mainWindow, ObjectOutputStream outputStream) {
-        this.mainWindow = mainWindow;
-        this.outputStream = outputStream;
-
+    public SaveMenuListener(ServerController serverController) {
+        this.serverController = serverController;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        try {
-            outputStream.writeObject("Save");
-            String  nameFile = JOptionPane.showInputDialog("Enter name of kmv.menu.file");
-            outputStream.writeObject(nameFile);
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
+        serverController.getServerManager().saveChanges();
+        JOptionPane.showMessageDialog(serverController.getTabbedTab(), "Data saved!");
     }
 }

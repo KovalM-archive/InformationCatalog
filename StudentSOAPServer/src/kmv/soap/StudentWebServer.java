@@ -12,23 +12,30 @@ public class StudentWebServer implements SOAPWebServer {
     private StudentsList studentsList = new StudentsList();
 
     @Override
+    public List<StudentModel> getAllStudents() {
+        return studentsList.getStudentList();
+    }
+
+    @Override
     public void addStudent(StudentModel studentModel) {
         studentsList.addStudent(studentModel);
     }
 
     @Override
     public void removeStudent(StudentModel studentModel) {
-
+        studentsList.removeStudent(studentModel);
     }
 
     @Override
     public boolean updateStudent(SearchStudentTerms studentTerms) {
+        studentsList.obtainBackup();
         return false;
     }
 
     @Override
     public List<StudentModel> findStudents(SearchStudentTerms studentTerms) {
-        return studentsList.findStudents(studentTerms);
+        studentsList.findStudents(studentTerms);
+        return null;
     }
 
     @Override
@@ -38,11 +45,16 @@ public class StudentWebServer implements SOAPWebServer {
 
     @Override
     public int getStudentCount() {
-        return 0;
+        return studentsList.getCountRecord();
     }
 
     @Override
     public StudentModel getStudentAtIndex(int index) {
-        return null;
+        return studentsList.getStudentAtIndex(index);
+    }
+
+    @Override
+    public void saveChanges() {
+        studentsList.saveChanges();
     }
 }

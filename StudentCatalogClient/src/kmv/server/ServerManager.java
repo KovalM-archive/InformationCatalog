@@ -1,11 +1,13 @@
 package kmv.server;
 
-import kmv.student.SearchStudentTerms;
-import kmv.student.StudentModel;
+import kmv.soap.SearchStudentTerms;
+import kmv.soap.StudentModel;
 
 import java.util.List;
 
-public interface ServiceManager {
+public interface ServerManager {
+
+    List<StudentModel> getAllStudents();
     void addStudent(StudentModel studentModel);
 
     void removeStudent(StudentModel studentModel);
@@ -19,4 +21,6 @@ public interface ServiceManager {
     int getStudentCount();
 
     StudentModel getStudentAtIndex(int index);
+
+    void saveChanges();
 }

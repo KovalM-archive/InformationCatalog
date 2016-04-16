@@ -1,9 +1,10 @@
 package kmv.view;
 
 
-import kmv.student.StudentModel;
+import kmv.soap.StudentModel;
 
 import javax.swing.table.AbstractTableModel;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class StudentTableModel extends AbstractTableModel {
@@ -28,7 +29,7 @@ public class StudentTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         if (columnIndex != 0){
-            return studentListBuffer.get(rowIndex).getField(columnIndex);
+            return getField(studentListBuffer.get(rowIndex), columnIndex);
         } else {
             return numberRecordsOnPage*(indexPage-1)+rowIndex+1;
         }
@@ -69,5 +70,27 @@ public class StudentTableModel extends AbstractTableModel {
 
     public void setIndexPage(int indexPage) {
         this.indexPage = indexPage;
+    }
+
+    private Object getField(StudentModel studentModel, int columnIndex){
+        if (columnIndex == 1){
+            return studentModel.getSecondName() + " " +
+                    studentModel.getFirstName() + " " +
+                    studentModel.getThirdName();
+        } else if (columnIndex == 2){
+            return studentModel.getDateBirth().getDay() + "." +
+                    studentModel.getDateBirth().getMonth() + "." +
+                    studentModel.getDateBirth().getYear();
+        } else if (columnIndex == 3){
+            return studentModel.getFootballTeamName();
+        } else if (columnIndex == 4){
+            return studentModel.getFacultyName();
+        } else if (columnIndex == 5){
+            return studentModel.getSquad();
+        } else if (columnIndex == 6){
+            return studentModel.getPosition();
+        } else{
+            return null;
+        }
     }
 }

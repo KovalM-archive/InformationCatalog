@@ -1,15 +1,41 @@
 package kmv.student;
 
+import kmv.soap.ServerConfiguration;
+import kmv.xml.XMLFileService;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentsList {
+public class StudentsList implements ServerConfiguration {
     private List<StudentModel> studentList;
+    private List<StudentModel> studentListBackup;
+    private XMLFileService xmlFileService;
 
     public StudentsList(){
-        studentList = new ArrayList<StudentModel>();
+        studentList = new ArrayList<>();
+        xmlFileService = new XMLFileService(this);
+        xmlFileService.readFile(DATA_FILE);
+        studentListBackup = studentList.subList(0, studentList.size());
     }
 
+    public void obtainBackup(){
+        studentList = studentListBackup;
+    }
+
+    public void saveChanges(){
+        try {
+            xmlFileService.writeFile(DATA_FILE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+    }
     public int getCountRecord(){
         return studentList.size();
     }
@@ -38,25 +64,29 @@ public class StudentsList {
         studentList = newStudentList;
     }
 
-    public List<StudentModel> findStudents(SearchStudentTerms searchStudentTerms){
-        List<StudentModel> resultStudentList = new ArrayList<StudentModel>();
-        int number = studentList.size();
+    public void findStudents(SearchStudentTerms searchStudentTerms){
+        studentList = new ArrayList<>();
+
+        StudentModel student;
+        int number = studentListBackup.size();
         for (int i = 0; i < number; i++) {
-            StudentModel student = studentList.get(i);
-            if (foundAgreement(student,searchStudentTerms)){
-                StudentModel newStudent = student.clone();
-                resultStudentList.add(newStudent);
+            student = studentListBackup.get(i);
+            if (foundAgreement(student, searchStudentTerms)){
+                studentList.add(student.clone());
             }
         }
-        return resultStudentList;
     }
 
     public void findRemoveStudents(SearchStudentTerms searchStudentTerms){
-        int number = studentList.size();
+        studentList = new ArrayList<>();
+
+        StudentModel student;
+        int number = studentListBackup.size();
         for (int i = 0; i < number; i++) {
-            StudentModel student = studentList.get(i);
-            if (foundAgreement(student,searchStudentTerms)){
-                studentList.remove(student);
+            student = studentListBackup.get(i);
+            if (foundAgreement(student, searchStudentTerms)){
+                studentList.add(student);
+                studentListBackup.remove(i);
                 i--;
                 number--;
             }

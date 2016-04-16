@@ -14,6 +14,9 @@ import java.util.List;
         parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
 public interface SOAPWebServer {
     @WebMethod
+    List<StudentModel> getAllStudents();
+
+    @WebMethod
     void addStudent(StudentModel studentModel);
 
     @WebMethod
@@ -33,4 +36,7 @@ public interface SOAPWebServer {
 
     @WebMethod
     StudentModel getStudentAtIndex(int index);
+
+    @WebMethod
+    void saveChanges();
 }

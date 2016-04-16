@@ -29,13 +29,9 @@ public class ChangeTablePanel extends JPanel implements ViewConstants{
         ImageIcon imLast = new ImageIcon(LAST_TOOLBAR_PAGE);
 
         JButton jbFirst = new JButton(imFirst);
-        jbFirst.setActionCommand("First page");
         JButton jbPrevious = new JButton(imPrevious);
-        jbPrevious.setActionCommand("Previous page");
         JButton jbNext = new JButton(imNext);
-        jbNext.setActionCommand("Next page");
         JButton jbLast = new JButton(imLast);
-        jbLast.setActionCommand("Last page");
 
         jtbPage.add(jbFirst);
         jtbPage.add(jbPrevious);

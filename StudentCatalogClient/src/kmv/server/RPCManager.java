@@ -1,15 +1,20 @@
 package kmv.server;
 
-import kmv.student.SearchStudentTerms;
-import kmv.student.StudentModel;
+import kmv.soap.SearchStudentTerms;
+import kmv.soap.StudentModel;
 
 import java.util.List;
 
-public class RPCManager implements ServiceManager {
+public class RPCManager implements ServerManager {
     private String hostName;
 
     public RPCManager(String hostName){
         setHostName(hostName);
+    }
+
+    @Override
+    public List<StudentModel> getAllStudents() {
+        return null;
     }
 
     @Override
@@ -45,6 +50,11 @@ public class RPCManager implements ServiceManager {
     @Override
     public StudentModel getStudentAtIndex(int index) {
         return null;
+    }
+
+    @Override
+    public void saveChanges() {
+
     }
 
     public String getHostName() {

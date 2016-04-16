@@ -1,19 +1,21 @@
 package kmv.menu.edit;
 
+import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import com.toedter.calendar.JDateChooser;
+import kmv.soap.StudentModel;
 import kmv.view.TablePanel;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.GregorianCalendar;
 
 public class AdditionDialogPanel extends JPanel {
     private TablePanel tablePanel;
+
     public AdditionDialogPanel(final TablePanel tablePanel){
         this.tablePanel = tablePanel;
         this.setLayout(new GridBagLayout());
@@ -38,40 +40,43 @@ public class AdditionDialogPanel extends JPanel {
         final JTextField enterPosition = new JTextField("",10);
 
         JButton enterButton = new JButton("ОК");
-//        enterButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                StudentModel currentStudent = new StudentModel();
-//                currentStudent.setFirstName(enterFirstName.getText());
-//                currentStudent.setSecondName(enterSecondName.getText());
-//                currentStudent.setThirdName(enterThirdName.getText());
-//                currentStudent.setDateBirth(new GregorianCalendar(enterDateBirth.getDate().getYear()+1900,
-//                        enterDateBirth.getDate().getMonth()+1,
-//                        enterDateBirth.getDate().getDate()));
-//
-//                currentStudent.setFootballTeamName(enterFootballTeamName.getText());
-//                currentStudent.setFacultyName((String)enterFaculty.getSelectedItem());
-//                currentStudent.setSquad(enterSquad.getSelectedIndex()+1);
-//                String position = enterPosition.getText();
-//                int weight = 0;
-//                for (int i=0; i<position.length(); i++){
-//                    weight = weight*10 + (int)position.charAt(i)-48;
-//                }
-//                currentStudent.setPosition(weight);
-//                tablePanel.getTableView().addStudent(currentStudent);
-//                tablePanel.getChangeTablePanel().getAllRecord().setText(
-//                        String.valueOf(tablePanel.getTableView().getCountRecord()));
-//                tablePanel.getChangeTablePanel().getAllPage().setText(
-//                        String.valueOf(tablePanel.getTableView().getNumberPage()));
-//                enterFirstName.setText("");
-//                enterSecondName.setText("");
-//                enterThirdName.setText("");
-//                enterFootballTeamName.setText("");
-//                enterFaculty.setSelectedIndex(0);
-//                enterSquad.setSelectedIndex(0);
-//                enterPosition.setText("");
-//            }
-//        });
+        enterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StudentModel currentStudent = new StudentModel();
+                currentStudent.setFirstName(enterFirstName.getText());
+                currentStudent.setSecondName(enterSecondName.getText());
+                currentStudent.setThirdName(enterThirdName.getText());
+                currentStudent.setDateBirth(new XMLGregorianCalendarImpl(new GregorianCalendar(enterDateBirth.getDate().getYear()+1900,
+                        enterDateBirth.getDate().getMonth()+1,
+                        enterDateBirth.getDate().getDate())));
+
+                currentStudent.setFootballTeamName(enterFootballTeamName.getText());
+                currentStudent.setFacultyName((String)enterFaculty.getSelectedItem());
+                currentStudent.setSquad(enterSquad.getSelectedIndex()+1);
+                String position = enterPosition.getText();
+                int weight = 0;
+                for (int i=0; i<position.length(); i++){
+                    weight = weight*10 + (int)position.charAt(i)-48;
+                }
+                currentStudent.setPosition(weight);
+                tablePanel.getTableView().addStudent(currentStudent);
+                tablePanel.getChangeTablePanel().getAllRecord().setText(
+                        String.valueOf(tablePanel.getTableView().getCountRecord()));
+                tablePanel.getChangeTablePanel().getAllPage().setText(
+                        String.valueOf(tablePanel.getTableView().getNumberPage()));
+
+                JOptionPane.showMessageDialog(tablePanel, "User created!");
+
+                enterFirstName.setText("");
+                enterSecondName.setText("");
+                enterThirdName.setText("");
+                enterFootballTeamName.setText("");
+                enterFaculty.setSelectedIndex(0);
+                enterSquad.setSelectedIndex(0);
+                enterPosition.setText("");
+            }
+        });
 
         add(enterFirstNameText, new GridBagConstraints(0, 0, 1, 1, 0, 0,
                 GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(
