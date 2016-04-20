@@ -1,7 +1,10 @@
 .idea
 StudentCatalogClient/.idea
 StudentCatalogClient/out
+StudentCatalogClient/StudentCatalogClient.iml
 StudentSOAPServer/resources
 StudentSOAPServer/.idea
 StudentSOAPServer/out
-
+StudetnThriftServer/resources
+StudetnThriftServer/.idea
+StudetnThriftServer/out

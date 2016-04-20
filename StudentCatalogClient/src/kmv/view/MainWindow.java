@@ -132,7 +132,7 @@ public class MainWindow implements ViewConstants, ServerConstants{
         String choose = (String)JOptionPane.showInputDialog(null, "Choose server type", "Server Chooser",
                 JOptionPane.PLAIN_MESSAGE, null, possibilities, SOAP_TYPE);
         if (RPC_TYPE.equals(choose)){
-            serverController.setServerManager(new RPCManager(enterHost()));
+            serverController.setServerManager(new RPCManager());
         } else if (SOAP_TYPE.equals(choose)){
             serverController.setServerManager(new SOAPManager());
         } else {

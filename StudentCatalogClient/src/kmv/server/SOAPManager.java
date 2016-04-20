@@ -16,11 +16,6 @@ public class SOAPManager implements ServerManager {
     }
 
     @Override
-    public List<StudentModel> getAllStudents() {
-        return soapWebServer.getAllStudents();
-    }
-
-    @Override
     public void addStudent(StudentModel studentModel) {
         soapWebServer.addStudent(studentModel);
     }

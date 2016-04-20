@@ -2,12 +2,12 @@ package kmv.server;
 
 import kmv.soap.SearchStudentTerms;
 import kmv.soap.StudentModel;
+import org.apache.thrift.TException;
 
 import java.util.List;
 
 public interface ServerManager {
 
-    List<StudentModel> getAllStudents();
     void addStudent(StudentModel studentModel);
 
     void removeStudent(StudentModel studentModel);
